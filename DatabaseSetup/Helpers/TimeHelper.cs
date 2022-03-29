@@ -41,9 +41,14 @@ namespace DatabaseSetup.Helpers
             return timestamp;
         }
 
-        public static DateTime ConvertToUTCFromMalaysiaTimezone(DateTime UTC)
+        public static DateTime ConvertToUTCFromLocal(DateTime KL)
         {
-            return UTC.AddHours(-8);
+            return KL.AddHours(-8);
+        }
+
+        public static DateTime ConvertToLocalFromUTC(DateTime UTC)
+        {
+            return UTC.AddHours(8);
         }
     }
 }

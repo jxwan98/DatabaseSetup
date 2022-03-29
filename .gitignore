@@ -1,5 +1,5 @@
 .vs/*
-obj/
-bin/
+DatabaseSetup/obj/
+DatabaseSetup/bin/
 Logs/
 .vscode/

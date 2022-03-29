@@ -19,7 +19,7 @@ namespace DatabaseSetup.Controllers
         }
 
         [HttpPut("{monthId}/SetUnlockTimestamp", Name = "SetUnlockTimestamp")]
-        public ActionResult SetUnlockTimestamp(DailyRewardMonth.Month monthId)
+        public ActionResult SetUnlockTimestamp(Month monthId)
         {
             var month = _dailyRewardPoolService.GetDailyRewardMonth(monthId);
             if (month == null) return BadRequest("No such month exists!");

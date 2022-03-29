@@ -21,12 +21,12 @@ namespace DatabaseSetup.Services
             _monthCollection = _mongoContext.GetCollectionFromGlobalDB<DailyRewardMonth>("DailyRewardPool");
         }
 
-        public DailyRewardMonth GetDailyRewardMonth(DailyRewardMonth.Month monthId)
+        public DailyRewardMonth GetDailyRewardMonth(Month monthId)
         {
             return _monthCollection.Find(x => x.monthId.Equals(monthId)).FirstOrDefault();
         }
 
-        public void UpdateUnlockTimestamp(DailyRewardMonth.Month monthId, List<LoginTask> loginTasks)
+        public void UpdateUnlockTimestamp(Month monthId, List<LoginTask> loginTasks)
         {
             var filter = Builders<DailyRewardMonth>.Filter.Eq("monthId", monthId);
             var update = Builders<DailyRewardMonth>.Update.Set("loginTasks", loginTasks);
@@ -43,11 +43,11 @@ namespace DatabaseSetup.Services
             }
         }
 
-        private uint SetUnlockDate(DailyRewardMonth.Month monthId, int day)
+        private uint SetUnlockDate(Month monthId, int day)
         {
             //we are storing the utc timestamp in database
             DateTime kl = new DateTime(DateTime.UtcNow.Date.Year, (int)monthId, day, 0, 0, 0, DateTimeKind.Utc);
-            DateTime utc = TimeHelper.ConvertToUTCFromMalaysiaTimezone(kl);
+            DateTime utc = TimeHelper.ConvertToUTCFromLocal(kl);
             return TimeHelper.DateTimeToTimestamp(utc);
         }
     }
