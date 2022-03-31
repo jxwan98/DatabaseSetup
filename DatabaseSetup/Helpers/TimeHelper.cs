@@ -11,13 +11,6 @@ namespace DatabaseSetup.Helpers
         {
             get
             {
-                return (uint)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            }
-        }
-        public static uint CurrentUTCTimestamp
-        {
-            get
-            {
                 return (uint)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
             }
         }
@@ -27,28 +20,18 @@ namespace DatabaseSetup.Helpers
             return (uint)days * 86400;
         }
 
-        public static DateTime TimestampToDateTime(uint timestamp)
+        public static DateTime TimestampToDateTime(uint timestamp, DateTimeKind timezone)
         {
-            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dateTime = dateTime.AddSeconds(timestamp);
-
+            DateTime epochDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, timezone);
+            var dateTime = epochDateTime.AddSeconds(timestamp);
             return dateTime;
         }
 
         public static uint DateTimeToTimestamp(DateTime dateTime)
         {
-            uint timestamp = (uint)dateTime.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            DateTime epochDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            uint timestamp = (uint)dateTime.ToUniversalTime().Subtract(epochDateTime).TotalSeconds;
             return timestamp;
-        }
-
-        public static DateTime ConvertToUTCFromLocal(DateTime KL)
-        {
-            return KL.AddHours(-8);
-        }
-
-        public static DateTime ConvertToLocalFromUTC(DateTime UTC)
-        {
-            return UTC.AddHours(8);
         }
     }
 }

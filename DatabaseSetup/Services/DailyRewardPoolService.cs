@@ -46,9 +46,8 @@ namespace DatabaseSetup.Services
         private uint SetUnlockDate(Month monthId, int day)
         {
             //we are storing the utc timestamp in database
-            DateTime kl = new DateTime(DateTime.UtcNow.Date.Year, (int)monthId, day, 0, 0, 0, DateTimeKind.Utc);
-            DateTime utc = TimeHelper.ConvertToUTCFromLocal(kl);
-            return TimeHelper.DateTimeToTimestamp(utc);
+            DateTime unlockDate = new DateTime(DateTime.Today.Date.Year, (int)monthId, day, 0, 0, 0, DateTimeKind.Local);
+            return TimeHelper.DateTimeToTimestamp(unlockDate);
         }
     }
 }
