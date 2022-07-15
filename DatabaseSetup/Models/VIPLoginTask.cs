@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 namespace DatabaseSetup.Models
 {
     [BsonIgnoreExtraElements]
-    public class LoginTask
+    public class VIPLoginTask
     {
         public int day { get; set; }
         public Reward reward { get; set; }
+        public int requiredAmount { get; set; }
         public uint timestamp { get; set; }
     }
 }
